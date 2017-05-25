@@ -6,19 +6,38 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.chaes.projectlittlecare.LCClass.UnPFlag;
+
 
 public class LoginMain extends AppCompatActivity {
-// 뿌앵
+    UnPFlag user = new UnPFlag();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
+
+
         Button btn = (Button)findViewById(R.id.button);
-        btn.setOnClickListener(new View.OnClickListener(){
+        Button btn2 = (Button)findViewById(R.id.button2);
+
+        btn.setOnClickListener(new View.OnClickListener(){ // 제공자
             @Override
             public void onClick(View v) {
+                user.setUnPFlag(1);
                 Intent intent = new Intent(LoginMain.this, MenuMain.class);
+                intent.putExtra("UnPFlag", user);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        btn2.setOnClickListener(new View.OnClickListener() { // 유저
+            @Override
+            public void onClick(View v) {
+                user.setUnPFlag(2);
+                Intent intent = new Intent(LoginMain.this, MenuMain.class);
+                intent.putExtra("UnPFlag", user);
                 startActivity(intent);
                 finish();
             }
