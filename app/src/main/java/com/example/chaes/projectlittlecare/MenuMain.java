@@ -74,6 +74,7 @@ public class MenuMain extends AppCompatActivity {
         } else{ // 유저
             navigation2.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
             navigation.setVisibility(View.GONE);
+
         }
 
     }
