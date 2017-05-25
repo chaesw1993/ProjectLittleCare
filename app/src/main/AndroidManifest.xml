@@ -24,8 +24,6 @@
         <activity
             android:name=".MenuMain"
             android:label="@string/title_activity_menu_main" />
-        <activity android:name=".MatchingInfo" />
-
 
     </application>
 
