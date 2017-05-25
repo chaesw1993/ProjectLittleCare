@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ProjectLittleCare</string>
+    <string name="title_activity_menu_main">MenuMain</string>
+    <string name="title_home">Home</string>
+    <string name="title_request">Request</string>
+    <string name="title_matching">Matching</string>
+    <string name="title_activity">Activity</string>
+    <string name="title_matching_info">MatchingInfo</string>
+    <string name="title_map">Map</string>
+</resources>
