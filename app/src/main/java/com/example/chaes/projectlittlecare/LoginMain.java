@@ -18,8 +18,8 @@ public class LoginMain extends AppCompatActivity {
         setContentView(R.layout.activity_login_main);
 
 
-        Button btn = (Button)findViewById(R.id.button);
-        Button btn2 = (Button)findViewById(R.id.button2);
+        Button btn = (Button)findViewById(R.id.btn_login);
+        Button btn2 = (Button)findViewById(R.id.btn_login2);
 
         btn.setOnClickListener(new View.OnClickListener(){ // 제공자
             @Override
