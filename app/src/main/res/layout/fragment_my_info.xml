@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff0000"
+    android:background="#ff9999"
     tools:context="com.example.chaes.projectlittlecare.Fragment_myInfo">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,12 +12,20 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/myInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="156dp"
-            android:text="myinfo" />
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="234dp"
+            android:layout_marginStart="31dp"
+            android:text="myInfo" />
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/MyInfo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
 </FrameLayout>
