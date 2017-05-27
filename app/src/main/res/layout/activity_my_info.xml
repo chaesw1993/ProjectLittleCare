@@ -70,87 +70,119 @@
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="#fff"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:padding="20dp"
-                android:textColor="@color/Black"
-                android:hint="ID"
-                android:textColorHint="@color/LightCoral"
-                />
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="#fff"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:padding="20dp"
-                android:textColor="@color/Black"
-                android:hint="Name"
-                android:textColorHint="@color/LightCoral"
-                />
+                <EditText
+                    android:id="@+id/user_id"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="#fff"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:padding="20dp"
+                    android:textColor="@color/Black"
+                    android:hint="ID"
+                    android:text="jaehyoung94"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="3dp"
-                android:background="#fff"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:padding="20dp"
-                android:textColor="@color/Black"
-                android:hint="Age"
-                android:textColorHint="@color/LightCoral"
-                />
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="#fff"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:padding="20dp"
-                android:textColor="@color/Black"
-                android:hint="Phone Number"
-                android:textColorHint="@color/LightCoral"
-                />
+                <EditText
+                    android:id="@+id/user_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="#fff"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:padding="20dp"
+                    android:textColor="@color/Black"
+                    android:hint="Name"
+                    android:text="Jay Kim"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="3dp"
-                android:background="#fff"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:padding="20dp"
-                android:textColor="@color/Black"
-                android:hint="Address"
-                android:textColorHint="@color/LightCoral"
-                />
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="#fff"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:padding="20dp"
-                android:textColor="@color/Black"
-                android:hint="e-mail Address"
-                android:textColorHint="@color/LightCoral"
-                />
+                <EditText
+                    android:id="@+id/user_age"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="#fff"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:padding="20dp"
+                    android:textColor="@color/Black"
+                    android:hint="Age"
+                    android:text="26"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/user_phone_number"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="#fff"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:padding="20dp"
+                    android:textColor="@color/Black"
+                    android:hint="Phone Number"
+                    android:text="01026725492"
+                    android:inputType="phone" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/user_address"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="#fff"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:padding="20dp"
+                    android:textColor="@color/Black"
+                    android:hint="Address"
+                    android:text="Korea Seoul"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/user_email"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="#fff"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:padding="20dp"
+                    android:textColor="@color/Black"
+                    android:hint="e-mail Address"
+                    android:text="jaehyoung944@gmail.com"
+                    android:inputType="textEmailAddress" />
+            </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/button2"
