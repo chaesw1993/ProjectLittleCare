@@ -28,8 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
+        android:background="@color/DodgerBlue"
         app:layout_scrollFlags="scroll|enterAlways|snap"
-        android:background="?android:attr/windowBackground"
         app:menu="@menu/navigation" />
 
     <android.support.design.widget.BottomNavigationView
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
+        android:background="@color/DodgerBlue"
         app:layout_scrollFlags="scroll|enterAlways|snap"
-        android:background="?android:attr/windowBackground"
         app:menu="@menu/navigation2" />
 </LinearLayout>
