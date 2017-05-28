@@ -31,7 +31,7 @@ public class LoginMain extends AppCompatActivity {
                 Intent intent = new Intent(LoginMain.this, MenuMain.class);
                 intent.putExtra("UnPFlag", user);
                 startActivity(intent);
-                finish();
+               // finish();
             }
         });
 
@@ -42,7 +42,7 @@ public class LoginMain extends AppCompatActivity {
                 Intent intent = new Intent(LoginMain.this, MenuMain.class);
                 intent.putExtra("UnPFlag", user);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
 
@@ -51,7 +51,7 @@ public class LoginMain extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginMain.this, SignUp.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
     }

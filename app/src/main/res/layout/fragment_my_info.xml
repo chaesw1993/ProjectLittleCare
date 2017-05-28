@@ -1,31 +1,223 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff9999"
-    tools:context="com.example.chaes.projectlittlecare.Fragment_myInfo">
+    android:background="@color/LightSteelBlue"
+    tools:context="com.example.chaes.projectlittlecare.Fragment_myInfo"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/WhiteSmoke"
+        android:baselineAligned="false"
+        android:orientation="vertical"
+        android:padding="10dp"
+        tools:context="com.example.chaes.projectlittlecare.LCClass.FindInfo"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="81dp"
+        >
+
 
         <TextView
-            android:id="@+id/myInfo"
+            android:id="@+id/myInfoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="fill"
+            android:text="내 정보"
+            android:background="@color/LightSteelBlue"
+            android:textAlignment="center"
+            android:textColor="@color/Black"
+            android:textSize="30sp" />
+
+        <TableLayout
+            android:id="@+id/tableLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="234dp"
-            android:layout_marginStart="31dp"
-            android:text="myInfo" />
+            android:layout_below="@+id/myInfoView"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
+            android:background="@drawable/border"
+            android:baselineAligned="false"
+            android:orientation="vertical"
+            android:padding="10dp"
+
+            tools:context="com.example.chaes.projectlittlecare.LCClass.FindInfo"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="81dp">
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:id="@+id/myInfoIdView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="아이디:"
+                    android:textColor="@color/Black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/myInfoId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="겟 아이디"
+                    android:textColor="@color/Black"
+                    android:textSize="24sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/myInfoNameView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="이름:"
+                    android:textColor="@color/Black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/myInfoName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="겟 이름"
+                    android:textColor="@color/Black"
+                    android:textSize="24sp" />
+            </TableRow>
+
+        </TableLayout>
+
+        <Button
+            android:id="@+id/myInfoModify"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/tableLayout"
+            android:layout_marginEnd="18dp"
+            android:layout_marginTop="20dp"
+            android:text="+" />
+
+        <view
+            class="android.support.v4.widget.Space"
+            id="@+id/view4"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_below="@+id/tableLayout"
+            android:background="@color/LightSteelBlue"
+            android:layout_marginTop="31dp"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tableLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="68dp"
+            android:text="매칭 정보"
+            android:textColor="@color/Black"
+            android:textSize="30sp" />
+
+        <TableLayout
+            android:id="@+id/tableLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView21"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="11dp"
+            android:background="@drawable/border"
+            android:baselineAligned="false"
+            android:orientation="vertical"
+            android:padding="10dp"
+            tools:context="com.example.chaes.projectlittlecare.LCClass.FindInfo">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/machingN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매칭인"
+                    android:textColor="@color/Black"
+                    android:gravity="center"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/machingName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="겟 매칭인"
+                    android:textColor="@color/Black"
+                    android:textSize="24sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/matchingPlaceV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매칭 장소"
+                    android:textColor="@color/Black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/matchingPlace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="겟 장소"
+                    android:textColor="@color/Black"
+                    android:textSize="24sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/matchingDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="날짜"
+                    android:textColor="@color/Black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="겟 날짜"
+                    android:textColor="@color/Black"
+                    android:textSize="24sp" />
+            </TableRow>
+
+        </TableLayout>
+
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/MyInfo_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
-</FrameLayout>
+</LinearLayout>

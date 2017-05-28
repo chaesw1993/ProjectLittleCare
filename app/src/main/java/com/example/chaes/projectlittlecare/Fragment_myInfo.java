@@ -14,7 +14,7 @@ public class Fragment_myInfo extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_info, container, false);
 
-        Button button = (Button)view.findViewById(R.id.MyInfo_button);
+        Button button = (Button)view.findViewById(R.id.myInfoModify);
         button.setOnClickListener(this);
         return view;
     }
@@ -22,7 +22,7 @@ public class Fragment_myInfo extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.MyInfo_button:
+            case R.id.myInfoModify:
                 Intent intent = new Intent(getActivity(), MyInfo.class);
                 getActivity().startActivity(intent);
         }
