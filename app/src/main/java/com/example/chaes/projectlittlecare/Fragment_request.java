@@ -4,9 +4,9 @@ package com.example.chaes.projectlittlecare;
  * Created by chaes on 2017-05-26.
  */
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
 

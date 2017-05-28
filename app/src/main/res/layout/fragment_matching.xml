@@ -1,23 +1,46 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
-    tools:context="com.example.chaes.projectlittlecare.Fragment_matchingInfo">
+    android:layout_height="wrap_content"
+    android:background="@color/WhiteSmoke">
 
     <!-- TODO: Update blank fragment layout -->
 
     <RelativeLayout
+        android:id="@+id/profile_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/Pink"
+        android:elevation="4dp"
+        android:paddingBottom="24dp">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/matching_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="214dp"
-            android:text="matching" />
+            android:layout_marginTop="20dp"
+            android:text="Matching Request"
+            android:textColor="#fff"
+            android:textSize="24sp"
+            android:textStyle="bold" />
     </RelativeLayout>
-</FrameLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/profile_layout"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/listview2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+</RelativeLayout>
