@@ -8,8 +8,8 @@
     <string name="title_matching_info">MatchingInfo</string>
     <string name="title_map">Map</string>
     <string name="id">ID</string>
-    <string name="loginProvider">Login As Provider</string>
     <string name="loginUser">Login As User</string>
+    <string name="loginProvider">Login As Provider</string>
     <string name="password">Password</string>
     <string name="signIn">No account yet? Create one</string>
     <string name="logo">Logo</string>

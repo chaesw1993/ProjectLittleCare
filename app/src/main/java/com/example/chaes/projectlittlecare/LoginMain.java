@@ -27,22 +27,22 @@ public class LoginMain extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() { // 제공자
             @Override
             public void onClick(View v) {
-                user.setUnPFlag(1);
+                user.setUnPFlag(2);
                 Intent intent = new Intent(LoginMain.this, MenuMain.class);
                 intent.putExtra("UnPFlag", user);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
 
         btn2.setOnClickListener(new View.OnClickListener() { // 유저
             @Override
             public void onClick(View v) {
-                user.setUnPFlag(2);
+                user.setUnPFlag(1);
                 Intent intent = new Intent(LoginMain.this, MenuMain.class);
                 intent.putExtra("UnPFlag", user);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
 
@@ -51,7 +51,7 @@ public class LoginMain extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginMain.this, SignUp.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
         });
     }

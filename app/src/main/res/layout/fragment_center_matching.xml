@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/WhiteSmoke">
-
-    <!-- TODO: Update blank fragment layout -->
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/profile_layout"
@@ -28,6 +24,7 @@
             android:textColor="#fff"
             android:textSize="24sp"
             android:textStyle="bold" />
+
     </RelativeLayout>
 
     <LinearLayout
@@ -38,9 +35,8 @@
         android:orientation="vertical">
 
         <ListView
-            android:id="@+id/listview2"
+            android:id="@+id/center_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
-
 </RelativeLayout>
