@@ -21,7 +21,7 @@ public class Fragment_center_matching extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_center_matching, container, false);
-
+/*
         ListView center_list;
         CenterMatchingAdapter adapter;
 
@@ -43,7 +43,7 @@ public class Fragment_center_matching extends Fragment {
                 int age = Integer.parseInt(item.getAge());
             }
         });
-
+*/
         return view;
     }
 }
