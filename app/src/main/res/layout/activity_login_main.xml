@@ -55,16 +55,16 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_login"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/loginUser" />
-
-        <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_login2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/loginProvider" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/loginUser" />
 
         <TextView
             android:id="@+id/link_signup"
@@ -75,5 +75,13 @@
             android:text="@string/signIn"
             android:textSize="16sp" />
 
+        <TextView
+            android:id="@+id/link_find"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:text="@string/find"
+            android:textSize="16sp" />
     </LinearLayout>
 </ScrollView>

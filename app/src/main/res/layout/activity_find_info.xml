@@ -42,8 +42,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:text="이름"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="129dp"
                 tools:layout_editor_absoluteY="70dp" />
@@ -51,24 +53,29 @@
             <EditText
                 android:id="@+id/findIdName"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:background="#E6E6E6"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:maxLength="8"
                 android:selectAllOnFocus="false"
+
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="165dp"
                 tools:layout_editor_absoluteY="60dp" />
 
             <TextView
                 android:id="@+id/findIdPhoneV"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="전화번호"
                 android:textAlignment="textEnd"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="105dp"
                 tools:layout_editor_absoluteY="120dp" />
@@ -76,29 +83,33 @@
             <EditText
                 android:id="@+id/findIdPhone"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="35dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="#E6E6E6"
                 android:ems="10"
                 android:inputType="phone"
                 android:maxLength="11"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="164dp"
                 tools:layout_editor_absoluteY="108dp" />
 
             <Button
                 android:id="@+id/findIdBtn"
                 style="@style/Widget.AppCompat.Button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_columnSpan="2"
                 android:layout_gravity="fill"
                 android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/Yulbtn"
                 android:elevation="0dp"
-                android:text="아이디찾기"
-                android:background="@color/LightSteelBlue"
-                android:textAlignment="center"
+                android:text="아이디 찾기"
                 android:textAllCaps="false"
+                android:textColor="@color/WhiteSmoke"
+                android:textSize="30sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="86dp"
                 tools:layout_editor_absoluteY="385dp" />
@@ -106,11 +117,10 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dip"
-                android:background="@color/LightSteelBlue"
                 android:layout_columnSpan="2"
+                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"/>
-
+                android:background="@color/LightSteelBlue" />
 
 
             <TextView
@@ -118,8 +128,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:text="아이디"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="129dp"
                 tools:layout_editor_absoluteY="70dp" />
@@ -128,13 +140,16 @@
                 android:id="@+id/findPwId"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:background="#E6E6E6"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:maxLength="8"
                 android:selectAllOnFocus="false"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="165dp"
                 tools:layout_editor_absoluteY="60dp" />
 
@@ -145,6 +160,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="이름"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="129dp"
                 tools:layout_editor_absoluteY="70dp" />
@@ -153,13 +169,15 @@
                 android:id="@+id/findPwName"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="#E6E6E6"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:maxLength="8"
                 android:selectAllOnFocus="false"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="165dp"
                 tools:layout_editor_absoluteY="60dp" />
 
@@ -170,6 +188,7 @@
                 android:layout_weight="1"
                 android:text="생년월일"
                 android:textAlignment="textEnd"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="105dp"
                 tools:layout_editor_absoluteY="120dp" />
@@ -178,11 +197,13 @@
                 android:id="@+id/findPwBirth"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="#E6E6E6"
                 android:ems="10"
                 android:inputType="date"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="164dp"
                 tools:layout_editor_absoluteY="108dp" />
 
@@ -193,6 +214,7 @@
                 android:layout_weight="1"
                 android:text="전화번호"
                 android:textAlignment="textEnd"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="105dp"
                 tools:layout_editor_absoluteY="120dp" />
@@ -201,34 +223,37 @@
                 android:id="@+id/findPwPhone"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="#E6E6E6"
                 android:ems="10"
                 android:inputType="phone"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="164dp"
                 tools:layout_editor_absoluteY="108dp" />
 
             <Button
                 android:id="@+id/findPwBtn"
                 style="@style/Widget.AppCompat.Button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_columnSpan="2"
+
                 android:layout_gravity="fill"
                 android:layout_marginBottom="20dp"
-                android:elevation="0dp"
-                android:text="비밀번호찾기"
+                android:layout_marginTop="10dp"
+                android:background="@color/Yulbtn"
+                android:text="비밀번호 찾기"
                 android:textAllCaps="false"
+                android:textColor="@color/WhiteSmoke"
+                android:textSize="30sp"
                 android:textStyle="bold"
-                android:background="@color/LightSteelBlue"
                 tools:layout_editor_absoluteX="86dp"
                 tools:layout_editor_absoluteY="385dp" />
 
         </GridLayout>
-
     </FrameLayout>
-
 </LinearLayout>
 
 

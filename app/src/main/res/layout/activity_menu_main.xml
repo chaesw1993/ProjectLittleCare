@@ -26,15 +26,19 @@
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:background="@color/DodgerBlue"
+        app:layout_scrollFlags="scroll|enterAlways|snap"
         app:menu="@menu/navigation" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:background="@color/DodgerBlue"
+        app:layout_scrollFlags="scroll|enterAlways|snap"
         app:menu="@menu/navigation2" />
 </LinearLayout>

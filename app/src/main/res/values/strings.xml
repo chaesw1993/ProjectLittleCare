@@ -8,11 +8,12 @@
     <string name="title_matching_info">MatchingInfo</string>
     <string name="title_map">Map</string>
     <string name="id">ID</string>
-    <string name="loginProvider">Login As Provider</string>
     <string name="loginUser">Login As User</string>
+    <string name="loginProvider">Login As Provider</string>
     <string name="password">Password</string>
     <string name="signIn">No account yet? Create one</string>
     <string name="logo">Logo</string>
+    <string name="find">Find ID or Password</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
