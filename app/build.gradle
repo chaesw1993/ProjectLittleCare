@@ -37,4 +37,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:10.2.6'
     compile 'noman.placesapi:placesAPI:1.1.3'
     testCompile 'junit:junit:4.12'
+
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+
 }

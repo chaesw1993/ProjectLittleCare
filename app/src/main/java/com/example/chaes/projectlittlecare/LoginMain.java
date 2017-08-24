@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-
 import com.example.chaes.projectlittlecare.LCClass.FindInfo;
 import com.example.chaes.projectlittlecare.LCClass.SignUp;
 import com.example.chaes.projectlittlecare.LCClass.UnPFlag;

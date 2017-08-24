@@ -40,19 +40,19 @@
             android:rowCount="8">
 
             <TextView
-                android:id="@+id/signUpNameV"
+                android:id="@+id/signUpID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="이름"
+                android:text="아이디"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="129dp"
                 tools:layout_editor_absoluteY="70dp" />
 
             <EditText
-                android:id="@+id/signUpName"
+                android:id="@+id/sign_id"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="3dp"
@@ -61,7 +61,6 @@
                 android:background="#E6E6E6"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:maxLength="8"
                 android:selectAllOnFocus="false"
                 android:textSize="18sp"
                 tools:layout_editor_absoluteX="165dp"
@@ -80,7 +79,7 @@
                 tools:layout_editor_absoluteY="120dp" />
 
             <EditText
-                android:id="@+id/signUpPw"
+                android:id="@+id/sign_pw"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="3dp"
