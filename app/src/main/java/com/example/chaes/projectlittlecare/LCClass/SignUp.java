@@ -32,7 +32,7 @@ public class SignUp extends AppCompatActivity {
     private static final String URL = "http://52.79.162.197/insertUser.php";
     private RequestQueue requestQueue;
     private StringRequest request;
-    private EditText email, password;
+    private EditText email, password, birth, name, phone;
     private Button button;
 
     @Override
@@ -43,6 +43,10 @@ public class SignUp extends AppCompatActivity {
         button = (Button)findViewById(R.id.button);
         email = (EditText)findViewById(R.id.sign_id);
         password = (EditText)findViewById(R.id.sign_pw);
+        name = (EditText)findViewById(R.id.sign_name);
+        birth = (EditText)findViewById(R.id.sign_birth);
+        phone = (EditText)findViewById(R.id.sign_phone);
+
 
         requestQueue = Volley.newRequestQueue(this);
 
@@ -75,6 +79,9 @@ public class SignUp extends AppCompatActivity {
                         HashMap<String, String> hashMap = new HashMap<String, String>();
                         hashMap.put("email", email.getText().toString());
                         hashMap.put("password", password.getText().toString());
+                        hashMap.put("name", name.getText().toString());
+                        hashMap.put("birth", birth.getText().toString());
+                        hashMap.put("phone", phone.getText().toString());
 
                         return hashMap;
                     }
