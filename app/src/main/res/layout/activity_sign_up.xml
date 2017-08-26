@@ -169,36 +169,6 @@
                 tools:layout_editor_absoluteX="164dp"
                 tools:layout_editor_absoluteY="108dp" />
 
-            <RadioGroup
-                android:id="@+id/radio_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView2"
-                android:layout_column="1"
-                android:layout_marginTop="38dp"
-                android:layout_row="5">
-
-                <RadioButton
-                    android:id="@+id/provider"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="1"
-                    android:layout_row="6"
-                    android:layout_weight="1"
-                    android:text="사회복지자" />
-
-                <RadioButton
-                    android:id="@+id/disability"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="1"
-                    android:layout_row="7"
-                    android:text="사용자" />
-
-            </RadioGroup>
-
             <Button
                 android:id="@+id/button"
                 style="@style/Widget.AppCompat.Button"

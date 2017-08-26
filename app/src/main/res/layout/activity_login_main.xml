@@ -57,16 +57,10 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_login2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/loginProvider" />
-
-        <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/loginUser" />
+            android:text="Login" />
 
         <TextView
             android:id="@+id/link_signup"

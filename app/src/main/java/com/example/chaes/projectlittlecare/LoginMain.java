@@ -33,7 +33,7 @@ public class LoginMain extends AppCompatActivity {
     private RequestQueue requestQueue;
     private StringRequest request;
     private EditText email, password;
-    private Button btn, btn2;
+    private Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class LoginMain extends AppCompatActivity {
 
 
         btn = (Button) findViewById(R.id.btn_login);
-        btn2 = (Button) findViewById(R.id.btn_login2);
+        //btn2 = (Button) findViewById(R.id.btn_login2);
         TextView textView = (TextView) findViewById(R.id.link_signup);
         TextView textView2 = (TextView) findViewById(R.id.link_find);
         email = (EditText)findViewById(R.id.input_email);
@@ -50,19 +50,7 @@ public class LoginMain extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-        btn.setOnClickListener(new View.OnClickListener() { // 제공자
-            @Override
-            public void onClick(View v) {
-                user.setUnPFlag(2);
-                Intent intent = new Intent(LoginMain.this, MenuMain.class);
-                intent.putExtra("UnPFlag", user);
-                intent.putExtra("email", email.getText().toString());
-                startActivity(intent);
-                //finish();
-            }
-        });
-
-        btn2.setOnClickListener(new View.OnClickListener() { // 유저
+        btn.setOnClickListener(new View.OnClickListener() { // 유저
             @Override
             public void onClick(View v) {
 
