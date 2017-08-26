@@ -44,8 +44,8 @@ public class SignUp extends AppCompatActivity {
     private StringRequest request;
     private EditText email, password, birth, name, phone;
     private Button button;
-    private RadioButton user, provider;
-    String role;
+    //private RadioButton user, provider;
+    //String role;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -62,9 +62,9 @@ public class SignUp extends AppCompatActivity {
         name = (EditText) findViewById(R.id.sign_name);
         birth = (EditText) findViewById(R.id.sign_birth);
         phone = (EditText) findViewById(R.id.sign_phone);
-        user = (RadioButton)findViewById(R.id.disability);
-        provider = (RadioButton)findViewById(R.id.provider);
-
+        //user = (RadioButton)findViewById(R.id.disability);
+        //provider = (RadioButton)findViewById(R.id.provider);
+/*
         user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,7 +78,7 @@ public class SignUp extends AppCompatActivity {
                 role = "provider";
             }
         });
-
+*/
         requestQueue = Volley.newRequestQueue(this);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -129,7 +129,7 @@ public class SignUp extends AppCompatActivity {
                         hashMap.put("name", name.getText().toString());
                         hashMap.put("birth", birth.getText().toString());
                         hashMap.put("phone", phone.getText().toString());
-                        hashMap.put("role", role);
+                        //hashMap.put("role", role);
 
                         return hashMap;
                     }

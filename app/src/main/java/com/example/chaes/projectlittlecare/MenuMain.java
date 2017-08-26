@@ -1,14 +1,8 @@
 package com.example.chaes.projectlittlecare;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -102,8 +96,7 @@ public class MenuMain extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuMain.this, MyInfo.class);
-                intent.putExtra("email", user_email);
+                Intent intent = new Intent(MenuMain.this, MapsActivity.class);
                 startActivity(intent);
             }
         });
@@ -111,7 +104,7 @@ public class MenuMain extends AppCompatActivity {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuMain.this, MapsActivity.class);
+                Intent intent = new Intent(MenuMain.this, MatchingList.class);
                 startActivity(intent);
             }
         });
@@ -119,14 +112,16 @@ public class MenuMain extends AppCompatActivity {
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                finish();
             }
         });
 
         btn5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MenuMain.this, MyInfo.class);
+                intent.putExtra("email", user_email);
+                startActivity(intent);
             }
         });
     }

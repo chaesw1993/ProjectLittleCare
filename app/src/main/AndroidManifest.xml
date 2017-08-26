@@ -26,34 +26,27 @@
             android:label="@string/title_activity_menu_main"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-
         <activity
             android:name=".MyInfo"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-
-        </activity>
-
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
         <activity
             android:name=".LCClass.SignUp"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-
-        </activity>
-
-
-        <activity android:name=".LCClass.FindInfo"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-
-        </activity>
-        <meta-data
-                    android:name="com.google.android.geo.API_KEY"
-                    android:value="@string/google_maps_key" />
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
         <activity
-                  android:name=".MapsActivity"
-                  android:label="@string/title_activity_maps"></activity>
+            android:name=".LCClass.FindInfo"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".MatchingList"></activity>
     </application>
 
 </manifest>
