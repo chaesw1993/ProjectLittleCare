@@ -28,11 +28,6 @@ public class Fragment_map extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Fragment_center_matching fragment2 = new Fragment_center_matching();
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_place, fragment2);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+
     }
 }

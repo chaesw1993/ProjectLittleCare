@@ -10,6 +10,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.chaes.projectlittlecare.LCClass.UnPFlag;
 
@@ -18,53 +19,6 @@ public class MenuMain extends AppCompatActivity {
     UnPFlag user = new UnPFlag();
     //Intent intent = getIntent();
     //String email = intent.getStringExtra("email");
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        Fragment fragment;
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            if(user.getUnPFlag() == 1){ // 제공자
-                switch (item.getItemId()) {
-                    case R.id.navigation_home:
-                        fragment = new Fragment_myInfo();
-                        break;
-                    case R.id.navigation_request:
-                        fragment = new Fragment_request();
-                        break;
-                    case R.id.navigation_matching:
-                        fragment = new Fragment_matching();
-                        break;
-                    case R.id.navigation_activity:
-                        fragment = new Fragment_activity();
-                        break;
-                }
-            } else if(user.getUnPFlag() == 2){ // 유저
-                switch (item.getItemId()) {
-                    case R.id.navigation_home:
-                        fragment = new Fragment_myInfo();
-                        break;
-                    case R.id.navigation_map:
-                        Intent intent = new Intent(MenuMain.this, MapsActivity.class);
-                        startActivity(intent);
-                        break;
-                    case R.id.navigation_matching:
-                        fragment = new Fragment_matching();
-                        break;
-                    case R.id.navigation_matching_info:
-                        fragment = new Fragment_matchingInfo();
-                        break;
-                }
-            }
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace( R.id.fragment_place, fragment);
-            fragmentTransaction.commit();
-            return false;
-        }
-
-    };
-
 
 
     @Override
@@ -76,25 +30,34 @@ public class MenuMain extends AppCompatActivity {
         user = (UnPFlag)intent.getSerializableExtra("UnPFlag");
         String email = intent.getStringExtra("email");
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        BottomNavigationView navigation2 = (BottomNavigationView) findViewById(R.id.navigation2);
+        Button btn1 = (Button)findViewById(R.id.all_btn1);
+        Button btn2 = (Button)findViewById(R.id.all_btn2);
+        Button btn3 = (Button)findViewById(R.id.all_btn3);
+        Button btn4 = (Button)findViewById(R.id.all_btn4);
 
-        if(user.getUnPFlag() == 1){ // 제공자
-            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-            navigation2.setVisibility(View.GONE);
-        } else{ // 유저
-            navigation2.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-            navigation.setVisibility(View.GONE);
-        }
-        Fragment fragment = new Fragment_myInfo();
-        Bundle bundle = new Bundle(1);
-        bundle.putString("email", email);
-        fragment.setArguments(bundle);
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_place, fragment);
-        fragmentTransaction.commit();
+        btn1.setOnClickListener(LCClickListener);
+        btn2.setOnClickListener(LCClickListener);
+        btn3.setOnClickListener(LCClickListener);
+        btn4.setOnClickListener(LCClickListener);
+
+
     }
-
+    Button.OnClickListener LCClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(v.getId() == R.id.all_btn1){    // 내정보
+                Intent intent = new Intent(MenuMain.this, MyInfo.class);
+                startActivity(intent);
+            } else if(v.getId() == R.id.all_btn2){ // 지도
+                Intent intent = new Intent(MenuMain.this, MapsActivity.class);
+                startActivity(intent);
+            } else if(v.getId() == R.id.all_btn3){ // 매칭
+                //Intent intent = new Intent(MenuMain.this, MenuMain.class);
+                //startActivity(intent);
+            } else if(v.getId() == R.id.all_btn4){ // 앱종료
+                finish();
+            }
+        }
+    };
 }
 
