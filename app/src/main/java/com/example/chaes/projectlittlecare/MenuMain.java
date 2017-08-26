@@ -11,13 +11,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.chaes.projectlittlecare.LCClass.UnPFlag;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MenuMain extends AppCompatActivity {
 
+    private static final String URL = "http://52.79.162.197/user_info.php";
+    RequestQueue requestQueue;
+    StringRequest request;
     UnPFlag user = new UnPFlag();
-    String user_email;
+    String user_email, user_name;
+    private TextView id, name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,39 +43,92 @@ public class MenuMain extends AppCompatActivity {
         setContentView(R.layout.activity_menu_main);
 
         Intent intent = getIntent();
-        user = (UnPFlag)intent.getSerializableExtra("UnPFlag");
+        user = (UnPFlag) intent.getSerializableExtra("UnPFlag");
         String email = intent.getStringExtra("email");
         user_email = email;
 
-        Button btn1 = (Button)findViewById(R.id.all_btn1);
-        Button btn2 = (Button)findViewById(R.id.all_btn2);
-        Button btn3 = (Button)findViewById(R.id.all_btn3);
-        Button btn4 = (Button)findViewById(R.id.all_btn4);
+        id = (TextView) findViewById(R.id.myInfoId);
+        name = (TextView) findViewById(R.id.myInfoName);
 
-        btn1.setOnClickListener(LCClickListener);
-        btn2.setOnClickListener(LCClickListener);
-        btn3.setOnClickListener(LCClickListener);
-        btn4.setOnClickListener(LCClickListener);
+        id.setText(user_email);
 
+        Button btn1 = (Button) findViewById(R.id.all_btn1);
+        Button btn2 = (Button) findViewById(R.id.all_btn2);
+        Button btn3 = (Button) findViewById(R.id.all_btn3);
+        Button btn4 = (Button) findViewById(R.id.all_btn4);
+        Button btn5 = (Button) findViewById(R.id.myInfoModify);
 
-    }
-    Button.OnClickListener LCClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if(v.getId() == R.id.all_btn1){    // 내정보
+        requestQueue = Volley.newRequestQueue(this);
+
+        request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    user_name = (jsonObject.getString("name"));
+                    name.setText(user_name);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Intent intent = getIntent();
+                String email = intent.getStringExtra("email");
+                HashMap<String, String> hashMap = new HashMap<String, String>();
+                hashMap.put("email", email);
+
+                return hashMap;
+            }
+        };
+
+        requestQueue.add(request);
+
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent intent = new Intent(MenuMain.this, MyInfo.class);
                 intent.putExtra("email", user_email);
                 startActivity(intent);
-            } else if(v.getId() == R.id.all_btn2){ // 지도
+            }
+        });
+
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuMain.this, MyInfo.class);
+                intent.putExtra("email", user_email);
+                startActivity(intent);
+            }
+        });
+
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent intent = new Intent(MenuMain.this, MapsActivity.class);
                 startActivity(intent);
-            } else if(v.getId() == R.id.all_btn3){ // 매칭
-                //Intent intent = new Intent(MenuMain.this, MenuMain.class);
-                //startActivity(intent);
-            } else if(v.getId() == R.id.all_btn4){ // 앱종료
-                finish();
             }
-        }
-    };
+        });
+
+        btn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btn5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
 }
 
