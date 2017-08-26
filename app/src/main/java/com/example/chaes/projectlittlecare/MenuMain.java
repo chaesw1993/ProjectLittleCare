@@ -45,7 +45,8 @@ public class MenuMain extends AppCompatActivity {
                         fragment = new Fragment_myInfo();
                         break;
                     case R.id.navigation_map:
-                        fragment = new Fragment_map();
+                        Intent intent = new Intent(MenuMain.this, MapsActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.navigation_matching:
                         fragment = new Fragment_matching();
