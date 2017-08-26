@@ -28,16 +28,13 @@ import java.util.Map;
 public class MyInfo extends AppCompatActivity {
 
     private static final String URL = "http://52.79.162.197/user_info.php";
+    private static final String URL2 = "http://52.79.162.197/user_update.php";
     private RequestQueue requestQueue;
     private StringRequest request;
     private EditText id, name, birth, phone;
     private TextView user_profile_name;
     private Button button;
     String user_email, user_name, user_birth, user_phone;
-    InputStream is = null;
-    String result = null;
-    //String email = "jaehyoung94@naver.com";
-            //intent.getStringExtra("email");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +46,11 @@ public class MyInfo extends AppCompatActivity {
         name = (EditText) findViewById(R.id.user_name);
         birth = (EditText) findViewById(R.id.user_age);
         phone = (EditText) findViewById(R.id.user_phone_number);
-        user_profile_name = (TextView)findViewById(R.id.Username);
+        user_profile_name = (TextView) findViewById(R.id.Username);
 
         requestQueue = Volley.newRequestQueue(this);
 
-        request =  new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+        request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -77,7 +74,7 @@ public class MyInfo extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
             }
-    }) {
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Intent intent = getIntent();
@@ -91,5 +88,45 @@ public class MyInfo extends AppCompatActivity {
 
         requestQueue.add(request);
 
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                request = new StringRequest(Request.Method.POST, URL2, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.getString("code")=="0") {
+                                Toast.makeText(getApplicationContext(), "Failed to Update",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Successfully Updated",
+                                        Toast.LENGTH_SHORT).show();
+                        }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String, String> hashMap = new HashMap<String, String>();
+                        hashMap.put("email", id.getText().toString());
+                        hashMap.put("name", name.getText().toString());
+                        hashMap.put("birth", birth.getText().toString());
+                        hashMap.put("phone", phone.getText().toString());
+
+                        return hashMap;
+                    }
+
+                };
+                requestQueue.add(request);
+            }
+        });
     }
 }
