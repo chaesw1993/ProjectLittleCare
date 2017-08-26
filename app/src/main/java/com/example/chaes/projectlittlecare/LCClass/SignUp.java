@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +36,7 @@ import org.json.JSONObject;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 public class SignUp extends AppCompatActivity {
@@ -50,6 +52,9 @@ public class SignUp extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     String TAG = "SignUp";
+    DatabaseReference myRef;
+    FirebaseUser user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,21 +69,21 @@ public class SignUp extends AppCompatActivity {
         phone = (EditText) findViewById(R.id.sign_phone);
         //user = (RadioButton)findViewById(R.id.disability);
         //provider = (RadioButton)findViewById(R.id.provider);
-/*
-        user.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                role = "user";
-            }
-        });
+            /*
+                    user.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            role = "user";
+                        }
+                    });
 
-        provider.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                role = "provider";
-            }
-        });
-*/
+                    provider.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            role = "provider";
+                        }
+                    });
+            */
         requestQueue = Volley.newRequestQueue(this);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -94,7 +99,6 @@ public class SignUp extends AppCompatActivity {
                 }
             }
         };
-
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -136,15 +140,23 @@ public class SignUp extends AppCompatActivity {
                 };
                 requestQueue.add(request);
 
-                regiserUser(email.getText().toString(),password.getText().toString());
+                if (email.getText().toString().isEmpty() || email.getText().toString().equals("") || password.getText().toString().isEmpty() || password.getText().toString().equals("")) {
+                    Toast.makeText(SignUp.this, "모두채워주세요", Toast.LENGTH_SHORT).show();
+                } else {
+                    regiserUser(email.getText().toString(), password.getText().toString());
+                }
+
+
             }
-            });
-        }
+        });
+    }
+
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
+
     @Override
     public void onStop() {
         super.onStop();
@@ -152,7 +164,8 @@ public class SignUp extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-    public void regiserUser(String email, String password){
+
+    public void regiserUser(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -162,8 +175,24 @@ public class SignUp extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Toast.makeText(SignUp.this, "가입 실패",
                                     Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(SignUp.this, "Authentication success.",
+                                    Toast.LENGTH_SHORT).show();
+
+
+                            if (user != null) {
+                                Hashtable<String, String> profile = new Hashtable<String, String>();
+                                profile.put("email", user.getEmail());
+                                profile.put("photo", "");
+                                profile.put("key", user.getUid());
+                                myRef.child(user.getUid()).setValue(profile);
+                            }
                         }
                     }
                 });
     }
 }
+
+
+
+
