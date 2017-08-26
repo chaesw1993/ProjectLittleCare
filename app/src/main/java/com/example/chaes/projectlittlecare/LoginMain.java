@@ -32,7 +32,7 @@ public class LoginMain extends AppCompatActivity {
     private static final String URL = "http://52.79.162.197/user_control.php";
     private RequestQueue requestQueue;
     private StringRequest request;
-    private EditText email, password;
+    EditText email, password;
     private Button btn, btn2;
 
     @Override
@@ -50,20 +50,52 @@ public class LoginMain extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-        btn.setOnClickListener(new View.OnClickListener() { // 제공자
+        btn.setOnClickListener(new View.OnClickListener() { // 사용자
             @Override
             public void onClick(View v) {
-                user.setUnPFlag(2);
-                Intent intent = new Intent(LoginMain.this, MenuMain.class);
-                intent.putExtra("UnPFlag", user);
-                startActivity(intent);
 
-                //finish();
+                request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if(jsonObject.names().get(0).equals("success")) {
+                                Toast.makeText(getApplicationContext(), "Success " + jsonObject.getString("success"), Toast.LENGTH_SHORT).show();
+                                user.setUnPFlag(2);
+                                Intent intent = new Intent(LoginMain.this, MenuMain.class);
+                                intent.putExtra("UnPFlag", user);
+                                intent.putExtra("email", email.getText().toString());
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Error "+jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String, String> hashMap = new HashMap<String, String>();
+                        hashMap.put("email", email.getText().toString());
+                        hashMap.put("password", password.getText().toString());
+
+                        return hashMap;
+                    }
+                };
+
+                requestQueue.add(request);
 
             }
         });
 
-        btn2.setOnClickListener(new View.OnClickListener() { // 유저
+        btn2.setOnClickListener(new View.OnClickListener() { // 제공자
             @Override
             public void onClick(View v) {
 
@@ -77,6 +109,7 @@ public class LoginMain extends AppCompatActivity {
                                 user.setUnPFlag(1);
                                 Intent intent = new Intent(LoginMain.this, MenuMain.class);
                                 intent.putExtra("UnPFlag", user);
+                                intent.putExtra("email", email.getText().toString());
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(getApplicationContext(), "Error "+jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
