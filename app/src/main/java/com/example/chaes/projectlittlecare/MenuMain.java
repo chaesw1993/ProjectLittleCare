@@ -17,9 +17,7 @@ import com.example.chaes.projectlittlecare.LCClass.UnPFlag;
 public class MenuMain extends AppCompatActivity {
 
     UnPFlag user = new UnPFlag();
-    //Intent intent = getIntent();
-    //String email = intent.getStringExtra("email");
-
+    String user_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +27,7 @@ public class MenuMain extends AppCompatActivity {
         Intent intent = getIntent();
         user = (UnPFlag)intent.getSerializableExtra("UnPFlag");
         String email = intent.getStringExtra("email");
+        user_email = email;
 
         Button btn1 = (Button)findViewById(R.id.all_btn1);
         Button btn2 = (Button)findViewById(R.id.all_btn2);
@@ -47,6 +46,7 @@ public class MenuMain extends AppCompatActivity {
         public void onClick(View v) {
             if(v.getId() == R.id.all_btn1){    // 내정보
                 Intent intent = new Intent(MenuMain.this, MyInfo.class);
+                intent.putExtra("email", user_email);
                 startActivity(intent);
             } else if(v.getId() == R.id.all_btn2){ // 지도
                 Intent intent = new Intent(MenuMain.this, MapsActivity.class);

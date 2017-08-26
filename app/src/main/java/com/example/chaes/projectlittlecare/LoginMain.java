@@ -56,10 +56,9 @@ public class LoginMain extends AppCompatActivity {
                 user.setUnPFlag(2);
                 Intent intent = new Intent(LoginMain.this, MenuMain.class);
                 intent.putExtra("UnPFlag", user);
+                intent.putExtra("email", email.getText().toString());
                 startActivity(intent);
-
                 //finish();
-
             }
         });
 
@@ -77,6 +76,7 @@ public class LoginMain extends AppCompatActivity {
                                 user.setUnPFlag(1);
                                 Intent intent = new Intent(LoginMain.this, MenuMain.class);
                                 intent.putExtra("UnPFlag", user);
+                                intent.putExtra("email", email.getText().toString());
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(getApplicationContext(), "Error "+jsonObject.getString("error"), Toast.LENGTH_SHORT).show();

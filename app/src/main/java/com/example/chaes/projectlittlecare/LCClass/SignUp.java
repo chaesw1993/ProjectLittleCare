@@ -1,12 +1,15 @@
 package com.example.chaes.projectlittlecare.LCClass;
 
 import android.content.Intent;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -34,19 +37,36 @@ public class SignUp extends AppCompatActivity {
     private StringRequest request;
     private EditText email, password, birth, name, phone;
     private Button button;
+    private RadioButton user, provider;
+    String role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        button = (Button)findViewById(R.id.button);
-        email = (EditText)findViewById(R.id.sign_id);
-        password = (EditText)findViewById(R.id.sign_pw);
-        name = (EditText)findViewById(R.id.sign_name);
-        birth = (EditText)findViewById(R.id.sign_birth);
-        phone = (EditText)findViewById(R.id.sign_phone);
+        button = (Button) findViewById(R.id.button);
+        email = (EditText) findViewById(R.id.sign_id);
+        password = (EditText) findViewById(R.id.sign_pw);
+        name = (EditText) findViewById(R.id.sign_name);
+        birth = (EditText) findViewById(R.id.sign_birth);
+        phone = (EditText) findViewById(R.id.sign_phone);
+        user = (RadioButton)findViewById(R.id.disability);
+        provider = (RadioButton)findViewById(R.id.provider);
 
+        user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                role = "user";
+            }
+        });
+
+        provider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                role = "provider";
+            }
+        });
 
         requestQueue = Volley.newRequestQueue(this);
 
@@ -82,13 +102,13 @@ public class SignUp extends AppCompatActivity {
                         hashMap.put("name", name.getText().toString());
                         hashMap.put("birth", birth.getText().toString());
                         hashMap.put("phone", phone.getText().toString());
+                        hashMap.put("role", role);
 
                         return hashMap;
                     }
                 };
-
                 requestQueue.add(request);
             }
             });
         }
-    }
+}
