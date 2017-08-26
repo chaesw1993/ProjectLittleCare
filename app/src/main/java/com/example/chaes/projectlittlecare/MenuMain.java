@@ -16,6 +16,8 @@ import com.example.chaes.projectlittlecare.LCClass.UnPFlag;
 public class MenuMain extends AppCompatActivity {
 
     UnPFlag user = new UnPFlag();
+    //Intent intent = getIntent();
+    //String email = intent.getStringExtra("email");
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -72,6 +74,7 @@ public class MenuMain extends AppCompatActivity {
 
         Intent intent = getIntent();
         user = (UnPFlag)intent.getSerializableExtra("UnPFlag");
+        String email = intent.getStringExtra("email");
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationView navigation2 = (BottomNavigationView) findViewById(R.id.navigation2);
@@ -84,6 +87,9 @@ public class MenuMain extends AppCompatActivity {
             navigation.setVisibility(View.GONE);
         }
         Fragment fragment = new Fragment_myInfo();
+        Bundle bundle = new Bundle(1);
+        bundle.putString("email", email);
+        fragment.setArguments(bundle);
         FragmentManager fm = getFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.add(R.id.fragment_place, fragment);
