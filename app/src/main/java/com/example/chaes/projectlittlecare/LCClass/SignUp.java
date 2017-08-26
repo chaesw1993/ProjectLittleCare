@@ -129,7 +129,7 @@ public class SignUp extends AppCompatActivity {
                         hashMap.put("name", name.getText().toString());
                         hashMap.put("birth", birth.getText().toString());
                         hashMap.put("phone", phone.getText().toString());
-                        //hashMap.put("role", role);
+                        hashMap.put("role", "user");
 
                         return hashMap;
                     }

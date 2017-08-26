@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,14 +21,10 @@ import com.android.volley.toolbox.Volley;
 import com.example.chaes.projectlittlecare.LCClass.FindInfo;
 import com.example.chaes.projectlittlecare.LCClass.SignUp;
 import com.example.chaes.projectlittlecare.LCClass.UnPFlag;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,6 +51,7 @@ public class LoginMain extends AppCompatActivity {
 
 
         btn = (Button) findViewById(R.id.btn_login);
+        btn2 = (Button) findViewById(R.id.btn_login2);
         TextView textView = (TextView) findViewById(R.id.link_signup);
         TextView textView2 = (TextView) findViewById(R.id.link_find);
         email = (EditText)findViewById(R.id.input_email);
@@ -75,6 +72,7 @@ public class LoginMain extends AppCompatActivity {
             }
         });
 
+        btn.setOnClickListener(new View.OnClickListener() { // 유저
         btn.setOnClickListener(new View.OnClickListener() { // 유저
             @Override
             public void onClick(View v) {

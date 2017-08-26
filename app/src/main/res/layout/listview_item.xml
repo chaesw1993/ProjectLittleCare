@@ -5,28 +5,20 @@
     android:background="@color/WhiteSmoke">
 
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="New Text1"
-            android:id="@+id/textView1"
-            android:textSize="24dp"
-            android:textStyle="bold"
-            android:textColor="#666666"
-            android:paddingTop="15dp"
-            android:paddingLeft="30dp"
-            android:layout_weight="1"
-            />
+        android:id="@+id/textView_list_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="4"
+        android:padding="5dp" />
 
-    <EditText
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:clickable="false"
-        android:editable="false"
-        android:text="New Text"
-        android:textColor="#000000"
-        android:textSize="24dp"
-        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView_list_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:layout_margin="5dp"
+        android:padding="5dp" />
 
 </LinearLayout>
