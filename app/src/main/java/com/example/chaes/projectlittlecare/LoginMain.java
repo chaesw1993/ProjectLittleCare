@@ -1,6 +1,7 @@
 package com.example.chaes.projectlittlecare;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,24 +49,45 @@ public class LoginMain extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     DatabaseReference myRef;
-    FirebaseUser fbUser;
+    FirebaseUser fbuser;
     ProgressBar pbLogin;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
 
-
         btn = (Button) findViewById(R.id.btn_login);
         TextView textView = (TextView) findViewById(R.id.link_signup);
         TextView textView2 = (TextView) findViewById(R.id.link_find);
-        email = (EditText)findViewById(R.id.input_email);
-        password = (EditText)findViewById(R.id.input_password);
-        pbLogin = (ProgressBar)findViewById(R.id.pbLogin);
+        email = (EditText) findViewById(R.id.input_email);
+        password = (EditText) findViewById(R.id.input_password);
+        pbLogin = (ProgressBar) findViewById(R.id.pbLogin);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("users");
+        mAuth = FirebaseAuth.getInstance();
 
         requestQueue = Volley.newRequestQueue(this);
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                fbuser = firebaseAuth.getCurrentUser();
+                if (fbuser != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + fbuser.getUid());
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("email", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("uid", fbuser.getUid());
+                    editor.putString("email", fbuser.getEmail());
+                    editor.apply();
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
 
         btn.setOnClickListener(new View.OnClickListener() { // 제공자
             @Override
@@ -87,7 +110,7 @@ public class LoginMain extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            if(jsonObject.names().get(0).equals("success")) {
+                            if (jsonObject.names().get(0).equals("success")) {
                                 Toast.makeText(getApplicationContext(), "Success " + jsonObject.getString("success"), Toast.LENGTH_SHORT).show();
                                 user.setUnPFlag(1);
                                 Intent intent = new Intent(LoginMain.this, MenuMain.class);
@@ -95,7 +118,7 @@ public class LoginMain extends AppCompatActivity {
                                 intent.putExtra("email", email.getText().toString());
                                 startActivity(intent);
                             } else {
-                                Toast.makeText(getApplicationContext(), "Error "+jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Error " + jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -120,7 +143,7 @@ public class LoginMain extends AppCompatActivity {
 
                 requestQueue.add(request);
 
-                if (email.getText().toString().isEmpty() ||email.getText().toString().equals("") ||password.getText().toString().isEmpty() || password.getText().toString().equals("") ){
+                if (email.getText().toString().isEmpty() || email.getText().toString().equals("") || password.getText().toString().isEmpty() || password.getText().toString().equals("")) {
                     Toast.makeText(LoginMain.this, "잘못입력하셨습니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     userLogin(email.getText().toString(), password.getText().toString());
@@ -155,6 +178,7 @@ public class LoginMain extends AppCompatActivity {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
+
     @Override
     public void onStop() {
         super.onStop();
@@ -162,7 +186,8 @@ public class LoginMain extends AppCompatActivity {
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-    private void userLogin(String email, String password){
+
+    private void userLogin(String email, String password) {
         pbLogin.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

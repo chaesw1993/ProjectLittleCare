@@ -148,6 +148,17 @@
                 android:text="Modify" />
 
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/user_profile_photo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="23dp"
+            android:layout_above="@id/user_profile_photo"
+            />
     </RelativeLayout>
 
 </ScrollView>
