@@ -46,7 +46,7 @@ public class ChatActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            email = user.getEmail();
+                     email = user.getEmail();
         }
 
         Intent in = getIntent();
@@ -81,11 +81,8 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
@@ -102,9 +99,6 @@ public class ChatActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 Chat chat = dataSnapshot.getValue(Chat.class);
-
-                // [START_EXCLUDE]
-                // Update RecyclerView
 
                 mChat.add(chat);
                 mRecyclerView.scrollToPosition(mChat.size() - 1);

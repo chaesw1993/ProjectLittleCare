@@ -14,12 +14,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.chaes.projectlittlecare.LCClass.ChatActivity;
+
 import com.example.chaes.projectlittlecare.LCClass.UnPFlag;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,10 +32,6 @@ public class MenuMain extends AppCompatActivity {
     UnPFlag user = new UnPFlag();
     String user_email, user_name;
     private TextView id, name;
-
-    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseReference = firebaseDatabase.getReference();
-
 
 
     @Override
@@ -135,24 +128,6 @@ public class MenuMain extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-        Button btnTest = (Button)findViewById(R.id.myInfoModify);
-        btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                databaseReference.child("message").push().setValue("help");
-
-
-
-            }
-        });
-
-
-
-
     }
 }
 

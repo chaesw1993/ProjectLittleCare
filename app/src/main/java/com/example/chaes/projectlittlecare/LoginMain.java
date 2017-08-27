@@ -41,76 +41,70 @@ import java.util.Map;
 
 
 public class LoginMain extends AppCompatActivity {
-    UnPFlag user = new UnPFlag();
+    UnPFlag puser = new UnPFlag();
     private static final String URL = "http://52.79.162.197/user_control.php";
     private RequestQueue requestQueue;
     private StringRequest request;
     private EditText email, password;
-    private Button btn;
+    private Button btnLogin;
 
     String TAG = "MainActivity";
+    String stEmail;
+    String stPassword;
+    ProgressBar pbLogin;
+
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     DatabaseReference myRef;
-    FirebaseUser fbuser;
-    ProgressBar pbLogin;
-    String stEmail; String stPassword;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
+
+        pbLogin = (ProgressBar)findViewById(R.id.pbLogin);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("users");
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("email", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("uid", user.getUid());
+                    editor.putString("email", user.getEmail());
+                    editor.apply();
+
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+
+
+
+
         requestQueue = Volley.newRequestQueue(this);
-        btn = (Button) findViewById(R.id.btn_login);
+        btnLogin = (Button) findViewById(R.id.btn_login);
         TextView textView = (TextView) findViewById(R.id.link_signup);
         TextView textView2 = (TextView) findViewById(R.id.link_find);
         email = (EditText) findViewById(R.id.input_email);
         password = (EditText) findViewById(R.id.input_password);
 
-
-        pbLogin = (ProgressBar) findViewById(R.id.pbLogin);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference();
-        mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                fbuser = firebaseAuth.getCurrentUser();
-                if (fbuser != null) {
-                    // User is signed in
-                    Log.d(TAG, "로그인상태:" + fbuser.getUid());
-
-                    SharedPreferences sharedPreferences = getSharedPreferences("email", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("uid", fbuser.getUid());
-                    editor.putString("email", fbuser.getEmail());
-                    editor.apply();
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "로그아웃상태");
-                }
-            }
-        };
-
-       /*btn.setOnClickListener(new View.OnClickListener() { // 제공자
-            @Override
-            public void onClick(View v) {
-                user.setUnPFlag(2);
-                Intent intent = new Intent(LoginMain.this, MenuMain.class);
-                intent.putExtra("UnPFlag", user);
-                intent.putExtra("email", email.getText().toString());
-                startActivity(intent);
-                //finish();
-            }
-        });
-*/
-        btn.setOnClickListener(new View.OnClickListener() { // 유저로그인
+        btnLogin.setOnClickListener(new View.OnClickListener() { // 유저로그인
             @Override
             public void onClick(View v) {
                 stEmail = email.getText().toString();
                 stPassword = password.getText().toString();
-                if (stEmail.isEmpty() || stEmail.equals("") || stPassword.isEmpty() || stPassword.equals("")) {
-                    Toast.makeText(LoginMain.this, "잘못입력하셨습니다.", Toast.LENGTH_SHORT).show();
+                if (stEmail.isEmpty() || stEmail.equals("") ||stPassword.isEmpty() || stPassword.equals("") ){
+                    Toast.makeText(LoginMain.this, "입력해 주세요", Toast.LENGTH_SHORT).show();
                 } else {
                     userLogin(stEmail, stPassword);
                 }
@@ -122,10 +116,10 @@ public class LoginMain extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.names().get(0).equals("success")) {
                                 Toast.makeText(getApplicationContext(), "Success " + jsonObject.getString("success"), Toast.LENGTH_SHORT).show();
-                                user.setUnPFlag(1);
+                                puser.setUnPFlag(1);
                                 Intent intent = new Intent(LoginMain.this, MenuMain.class);
 
-                                intent.putExtra("UnPFlag", user);
+                                intent.putExtra("UnPFlag", puser);
                                 intent.putExtra("email", email.getText().toString());
                                 startActivity(intent);
                             } else {
@@ -160,8 +154,6 @@ public class LoginMain extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginMain.this, SignUp.class);
                 startActivity(intent);
-                //finish();
-
             }
         });
 
@@ -170,18 +162,14 @@ public class LoginMain extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginMain.this, FindInfo.class);
                 startActivity(intent);
-                //finish();
-
             }
         });
     }
-
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
-
     @Override
     public void onStop() {
         super.onStop();
@@ -190,29 +178,30 @@ public class LoginMain extends AppCompatActivity {
         }
     }
 
-    private void userLogin(String email, String password) {
+    private void userLogin(String email, String password){
         pbLogin.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "로그인성공" + task.isSuccessful());
+                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
                         pbLogin.setVisibility(View.GONE);
-
-                        Hashtable<String, String> profile = new Hashtable<String, String>();
-
-                        profile.put("email", fbuser.getEmail());
-                        profile.put("photo", "");
-                        profile.put("key", fbuser.getUid());
-                        myRef.child(fbuser.getUid()).push().setValue(profile);
-
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail", task.getException());
-                            Toast.makeText(LoginMain.this, "로그인실패",
+                            Toast.makeText(LoginMain.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
+                        } else {
                         }
                     }
                 });
+
     }
+
+
+
+
 }

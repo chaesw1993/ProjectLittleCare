@@ -68,30 +68,22 @@ public class MyInfo extends AppCompatActivity {
     private Button button;
     String user_email, user_name, user_birth, user_phone;
 
-    private StorageReference mStorageRef;
+
     private ImageButton imBtn;
     String TAG = getClass().getSimpleName();
-    Bitmap bitmap;
-    String stUid;
-    String stEmail;
     ProgressBar pbLogin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_info);
 
-        imBtn = (ImageButton)findViewById(R.id.user_profile_photo);
-        mStorageRef = FirebaseStorage.getInstance().getReference();
+        imBtn = (ImageButton) findViewById(R.id.user_profile_photo);
 
-        SharedPreferences sharedPreferences = MyInfo.this.getSharedPreferences("email", Context.MODE_PRIVATE);
-        stUid = sharedPreferences.getString("uid", "");
-        stEmail = sharedPreferences.getString("email", "");
 
-        pbLogin = (ProgressBar)findViewById(R.id.progressBar2);
+        pbLogin = (ProgressBar) findViewById(R.id.progressBar2);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("users");
 
         button = (Button) findViewById(R.id.Modify);
         id = (EditText) findViewById(R.id.user_id);
@@ -101,81 +93,7 @@ public class MyInfo extends AppCompatActivity {
         user_profile_name = (TextView) findViewById(R.id.Username);
         requestQueue = Volley.newRequestQueue(this);
 
-/*
-        myRef.child("users").child(stUid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-           public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String stPhoto = dataSnapshot.child("photo").getValue().toString();
-
-                if(TextUtils.isEmpty(stPhoto)) {
-                    pbLogin.setVisibility(View.GONE);
-
-                } else {
-
-                    pbLogin.setVisibility(View.VISIBLE);
-                    Picasso.with(MyInfo.this)
-                            .load(stPhoto)
-                            .fit()
-                            .centerInside()
-                            .into(imBtn, new Callback.EmptyCallback() {
-                                @Override public void onSuccess() {
-                                    imBtn.setBackgroundColor(Color.rgb(0,0,0));
-                                    imBtn.setPadding(0,0,0,0);
-                                    // Index 0 is the image view.
-                                    Log.d(TAG, "SUCCESS");
-                                    pbLogin.setVisibility(View.GONE);
-
-
-                                }
-                            });
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-
-
-        if (ContextCompat.checkSelfPermission(MyInfo.this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(MyInfo.this,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-            } else {
-
-                // No explanation needed, we can request the permission.
-
-                ActivityCompat.requestPermissions(MyInfo.this,
-                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                        1);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        }
-
-
-        imBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, 1);
-
-            }
-        });
-*/
         request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -222,13 +140,13 @@ public class MyInfo extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.getString("code")=="0") {
+                            if (jsonObject.getString("code") == "0") {
                                 Toast.makeText(getApplicationContext(), "Failed to Update",
                                         Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Successfully Updated",
                                         Toast.LENGTH_SHORT).show();
-                        }
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -256,58 +174,8 @@ public class MyInfo extends AppCompatActivity {
         });
     }
     //-----------------------------------------------------//
-    public void uploadImage(){
 
-        StorageReference mountainsRef = mStorageRef.child("users").child(stUid+".jpg");
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
-
-        UploadTask uploadTask = mountainsRef.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @SuppressWarnings("VisibleForTests")
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                String photoUri =  String.valueOf(downloadUrl);
-                Log.d("url", photoUri);
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("users");
-
-                Hashtable<String, String> profile = new Hashtable<String, String>();
-                profile.put("email", stEmail);
-                profile.put("key", stUid);
-                profile.put("photo", photoUri);
-
-                myRef.child(stUid).setValue(profile);
-                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String s = dataSnapshot.getValue().toString();
-                        Log.d("Profile", s);
-                        if (dataSnapshot != null) {
-                            Toast.makeText(MyInfo.this, "사진 업로드가 잘 됐습니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-
-            }
-        });
-    }
-
+/*
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -318,12 +186,13 @@ public class MyInfo extends AppCompatActivity {
             imBtn.setImageBitmap(bitmap);
             imBtn.setBackgroundColor(Color.rgb(0,0,0));
             imBtn.setPadding(0,0,0,0);
-            uploadImage();
+            //uploadImage();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -333,20 +202,11 @@ public class MyInfo extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-
                 } else {
 
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 

@@ -16,6 +16,7 @@ import java.util.List;
  * Created by seoyu on 2017-08-26.
  */
     public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
+        private String[] mDataset;
         List<Chat> mChat;
         String stEmail;
         Context context;
@@ -90,4 +91,3 @@ import java.util.List;
             return mChat.size();
         }
     }
-

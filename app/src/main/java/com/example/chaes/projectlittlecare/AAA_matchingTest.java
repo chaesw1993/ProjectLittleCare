@@ -2,15 +2,20 @@ package com.example.chaes.projectlittlecare;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+
+import com.example.chaes.projectlittlecare.LCClass.ChatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,7 +59,21 @@ public class AAA_matchingTest extends AppCompatActivity {
 
         GetData task = new GetData();
         task.execute("http://52.79.162.197/getjson.php");
+
+        mlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(AAA_matchingTest.this, ChatActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
+
+
+
+
+
 
 
     private class GetData extends AsyncTask<String, Void, String>{
@@ -184,5 +203,7 @@ public class AAA_matchingTest extends AppCompatActivity {
         }
 
     }
+
+
 
 }

@@ -45,44 +45,38 @@ public class SignUp extends AppCompatActivity {
     private Button button;
 
     String TAG = "SignUp";
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
-    private FirebaseUser fbuser;
     String stEmail;
     String stPassword;
-
+    DatabaseReference myRef;
+    FirebaseUser user;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("users");
-
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
-
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                fbuser = firebaseAuth.getCurrentUser();
-
-                if (fbuser != null) {
+                user = firebaseAuth.getCurrentUser();
+                if (user != null) {
                     // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + fbuser.getUid());
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
                     SharedPreferences sharedPreferences = getSharedPreferences("email", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("uid", fbuser.getUid());
-                    editor.putString("email", fbuser.getEmail());
+                    editor.putString("uid", user.getUid());
+                    editor.putString("email", user.getEmail());
                     editor.apply();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // ...
             }
         };
 
@@ -100,10 +94,13 @@ public class SignUp extends AppCompatActivity {
                 stEmail = email.getText().toString();
                 stPassword = password.getText().toString();
 
-                if (stEmail.isEmpty() || stEmail.equals("") || stPassword.isEmpty() || stPassword.equals("")) {
-                    Toast.makeText(SignUp.this, "모두채워주세요", Toast.LENGTH_SHORT).show();
-                } else {
+                // Toast.makeText(MainActivity.this, stEmail+","+stPassword, Toast.LENGTH_SHORT).show();
+                if (stEmail.isEmpty() || stEmail.equals("") ||stPassword.isEmpty() || stPassword.equals("") ){
+                    Toast.makeText(SignUp.this, "입력해 주세요", Toast.LENGTH_SHORT).show();
+                } else{
                     regiserUser(stEmail, stPassword);
+                }
+
                     request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -139,30 +136,42 @@ public class SignUp extends AppCompatActivity {
                         }
                     };
                     requestQueue.add(request);
-                }
+
             }
         });
     }
 
+    public void regiserUser(String email, String password){
 
-
-
-    public void regiserUser(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+
+
+
                         if (!task.isSuccessful()) {
                             Toast.makeText(SignUp.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
-
-
                             Toast.makeText(SignUp.this, "Authentication success.",
                                     Toast.LENGTH_SHORT).show();
+
+                            if (user != null) {
+                                Hashtable<String, String> profile = new Hashtable<String, String>();
+                                profile.put("email", user.getEmail());
+                                profile.put("photo", "");
+                                profile.put("key", user.getUid());
+                                myRef.child(user.getUid()).setValue(profile);
+                            }
                         }
+
+                        // ...
                     }
                 });
 
@@ -171,19 +180,10 @@ public class SignUp extends AppCompatActivity {
 
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
+
+
+
 
 
 }
