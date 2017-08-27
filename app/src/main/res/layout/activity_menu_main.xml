@@ -165,7 +165,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="겟 매칭인"
                     android:textColor="@color/Black"
                     android:textSize="24sp" />
 
@@ -188,7 +187,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="겟 장소"
                     android:textColor="@color/Black"
                     android:textSize="24sp" />
             </TableRow>
@@ -211,7 +209,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="겟 날짜"
                     android:textColor="@color/Black"
                     android:textSize="24sp" />
             </TableRow>
