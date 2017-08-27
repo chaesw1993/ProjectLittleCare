@@ -104,7 +104,7 @@ public class MenuMain extends AppCompatActivity {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuMain.this, MatchingList.class);
+                Intent intent = new Intent(MenuMain.this, AAA_matchingTest.class);
                 startActivity(intent);
             }
         });
