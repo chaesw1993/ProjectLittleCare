@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "428530309667",
-    "firebase_url": "https://projectlittlecare-68d31.firebaseio.com",
-    "project_id": "projectlittlecare-68d31",
-    "storage_bucket": "projectlittlecare-68d31.appspot.com"
+    "project_number": "202841971248",
+    "firebase_url": "https://projectlittlecare-80b41.firebaseio.com",
+    "project_id": "projectlittlecare-80b41",
+    "storage_bucket": "projectlittlecare-80b41.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:428530309667:android:45d051e2de8c818d",
+        "mobilesdk_app_id": "1:202841971248:android:45d051e2de8c818d",
         "android_client_info": {
           "package_name": "com.example.chaes.projectlittlecare"
         }
       },
       "oauth_client": [
         {
-          "client_id": "428530309667-a7oehbbpuv6arhtmthpb60j876qu2326.apps.googleusercontent.com",
+          "client_id": "202841971248-vsoj1d420o7mm0kk7mpih7kfh4cvsslv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBWbv_VMU0IAwpxO7KWbk2q5Hwy_2w9b84"
+          "current_key": "AIzaSyDuQ_sTcgGvAhOhGRvzaO9Dqnt17ihohM0"
         }
       ],
       "services": {

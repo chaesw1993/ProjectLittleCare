@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -72,11 +74,10 @@ public class MyInfo extends AppCompatActivity {
     private StorageReference mStorageRef;
     private ImageButton ivUser;
     String TAG = getClass().getSimpleName();
-    ProgressBar pbLogin;
+
     Bitmap bitmap;
     String stUid;
     String stEmail;
-
 
 
     @Override
@@ -85,7 +86,7 @@ public class MyInfo extends AppCompatActivity {
         setContentView(R.layout.activity_my_info);
 
         ivUser = (ImageButton) findViewById(R.id.user_profile_photo);
-        pbLogin = (ProgressBar) findViewById(R.id.progressBar2);
+
 
 
         button = (Button) findViewById(R.id.Modify);
@@ -178,28 +179,55 @@ public class MyInfo extends AppCompatActivity {
 
 
         //--------------------------
-        if (ContextCompat.checkSelfPermission(MyInfo.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(MyInfo.this,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
-
-            } else {
-
-
-
-                ActivityCompat.requestPermissions(MyInfo.this,
-                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                        1);
-
-            }
-        }
-
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         SharedPreferences sharedPreferences = MyInfo.this.getSharedPreferences("email", Context.MODE_PRIVATE);
         stUid = sharedPreferences.getString("uid", "");
         stEmail = sharedPreferences.getString("email", "");
+
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+
+        myRef.child("users").child(stUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue().toString();
+                String stPhoto = dataSnapshot.child("photo").getValue().toString();
+
+                if (TextUtils.isEmpty(stPhoto)) {
+
+
+                } else {
+                    ivUser.setBackgroundColor(Color.rgb(0,0,0));
+                    ivUser.setPadding(0,0,0,0);
+                    Picasso.with(MyInfo.this)
+                            .load(stPhoto)
+                            .fit()
+                            .centerInside()
+                            .into(ivUser, new Callback.EmptyCallback() {
+                                @Override
+                                public void onSuccess() {
+                                    // Index 0 is the image view.
+                                    Log.d(TAG, "SUCCESS");
+
+                                }
+                            });
+                }
+
+
+                Log.d(TAG, "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
 
         if (ContextCompat.checkSelfPermission(MyInfo.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -240,9 +268,9 @@ public class MyInfo extends AppCompatActivity {
         });
     }
 
-    public void uploadImage(){
+    public void uploadImage() {
 
-        StorageReference mountainsRef = mStorageRef.child("users").child(stUid+".jpg");
+        StorageReference mountainsRef = mStorageRef.child("users").child(stUid + ".jpg");
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -260,14 +288,15 @@ public class MyInfo extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                String photoUri =  String.valueOf(downloadUrl);
+                String photoUri = String.valueOf(downloadUrl);
                 Log.d("url", photoUri);
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference myRef = database.getReference("users");
 
                 Hashtable<String, String> profile = new Hashtable<String, String>();
                 profile.put("email", stEmail);
-                profile.put("photo",  photoUri);
+                profile.put("key", stUid);
+                profile.put("photo", photoUri);
 
                 myRef.child(stUid).setValue(profile);
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -316,11 +345,23 @@ public class MyInfo extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
                 } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
                 }
                 return;
             }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
         }
     }
 
 }
+
+

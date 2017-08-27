@@ -26,13 +26,12 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
+
     String TAG = this.getClass().getSimpleName();
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
-
     EditText etText;
     Button btnSend;
     String email;
@@ -46,7 +45,8 @@ public class ChatActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-                     email = user.getEmail();
+            // Name, email address, and profile photo Url
+            email = user.getEmail();
         }
 
         Intent in = getIntent();
@@ -60,7 +60,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 String stText = etText.getText().toString();
                 if (stText.equals("") || stText.isEmpty()){
-                    Toast.makeText(ChatActivity.this, "내용을 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChatActivity.this, "?댁슜???낅젰??二쇱꽭??", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(ChatActivity.this, email+","+stText, Toast.LENGTH_SHORT).show();
 
@@ -77,12 +77,22 @@ public class ChatActivity extends AppCompatActivity {
                     chat.put("text", stText);
                     myRef.setValue(chat);
                     etText.setText("");
+
+
                 }
+
+
+
+
             }
         });
 
+
+
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
@@ -99,6 +109,9 @@ public class ChatActivity extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 Chat chat = dataSnapshot.getValue(Chat.class);
+
+                // [START_EXCLUDE]
+                // Update RecyclerView
 
                 mChat.add(chat);
                 mRecyclerView.scrollToPosition(mChat.size() - 1);
@@ -130,3 +143,4 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 }
+
