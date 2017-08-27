@@ -8,10 +8,17 @@
     android:layout_margin="15dp"
     android:padding="10dp">
 
+    <TextView
+        android:id="@+id/csw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="등록된 활동보조인 리스트 (대화하려면 클릭)"
+        android:layout_weight="0.09" />
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6"
+        android:layout_weight="3.73"
         android:layout_margin="5dp"
         android:padding="5dp"
         android:id="@+id/listView_main_list" />
