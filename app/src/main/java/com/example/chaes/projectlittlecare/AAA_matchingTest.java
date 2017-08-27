@@ -75,12 +75,12 @@ public class AAA_matchingTest extends AppCompatActivity {
             super.onPostExecute(result);
 
             progressDialog.dismiss();
-            mTextViewResult.setText(result);
+            //mTextViewResult.setText(result);
             Log.d(TAG, "response  - " + result);
 
             if (result == null){
 
-                mTextViewResult.setText(errorString);
+                //mTextViewResult.setText(errorString);
             }
             else {
 
