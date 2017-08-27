@@ -91,7 +91,7 @@ public class MyInfo extends AppCompatActivity {
         pbLogin = (ProgressBar)findViewById(R.id.progressBar2);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
+        DatabaseReference myRef = database.getReference("users");
 
         button = (Button) findViewById(R.id.Modify);
         id = (EditText) findViewById(R.id.user_id);
@@ -101,13 +101,11 @@ public class MyInfo extends AppCompatActivity {
         user_profile_name = (TextView) findViewById(R.id.Username);
         requestQueue = Volley.newRequestQueue(this);
 
-
+/*
         myRef.child("users").child(stUid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue().toString();
+
                 String stPhoto = dataSnapshot.child("photo").getValue().toString();
 
                 if(TextUtils.isEmpty(stPhoto)) {
@@ -132,9 +130,6 @@ public class MyInfo extends AppCompatActivity {
                                 }
                             });
                 }
-
-
-                Log.d(TAG, "Value is: " + value);
             }
 
             @Override
@@ -180,7 +175,7 @@ public class MyInfo extends AppCompatActivity {
 
             }
         });
-
+*/
         request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -289,7 +284,7 @@ public class MyInfo extends AppCompatActivity {
                 Hashtable<String, String> profile = new Hashtable<String, String>();
                 profile.put("email", stEmail);
                 profile.put("key", stUid);
-                profile.put("photo",  photoUri);
+                profile.put("photo", photoUri);
 
                 myRef.child(stUid).setValue(profile);
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
