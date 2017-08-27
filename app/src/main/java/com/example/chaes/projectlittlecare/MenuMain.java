@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -32,7 +33,7 @@ public class MenuMain extends AppCompatActivity {
     UnPFlag user = new UnPFlag();
     String user_email, user_name;
     private TextView id, name;
-
+    long lastPressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +117,7 @@ public class MenuMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                finish();
+                MenuMain.this.finish();
             }
         });
 
@@ -128,6 +129,20 @@ public class MenuMain extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (System.currentTimeMillis() - lastPressed < 1500){
+            FirebaseAuth.getInstance().signOut();
+            MenuMain.this.finish();
+        }
+        Toast.makeText(this, "한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        lastPressed = System.currentTimeMillis();
+
+
     }
 }
 

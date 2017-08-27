@@ -1,6 +1,7 @@
 package com.example.chaes.projectlittlecare;
 
 import android.*;
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -68,10 +69,14 @@ public class MyInfo extends AppCompatActivity {
     private Button button;
     String user_email, user_name, user_birth, user_phone;
 
-
-    private ImageButton imBtn;
+    private StorageReference mStorageRef;
+    private ImageButton ivUser;
     String TAG = getClass().getSimpleName();
     ProgressBar pbLogin;
+    Bitmap bitmap;
+    String stUid;
+    String stEmail;
+
 
 
     @Override
@@ -79,9 +84,7 @@ public class MyInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_info);
 
-        imBtn = (ImageButton) findViewById(R.id.user_profile_photo);
-
-
+        ivUser = (ImageButton) findViewById(R.id.user_profile_photo);
         pbLogin = (ProgressBar) findViewById(R.id.progressBar2);
 
 
@@ -172,10 +175,122 @@ public class MyInfo extends AppCompatActivity {
                 requestQueue.add(request);
             }
         });
-    }
-    //-----------------------------------------------------//
 
-/*
+
+        //--------------------------
+        if (ContextCompat.checkSelfPermission(MyInfo.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MyInfo.this,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            } else {
+
+
+
+                ActivityCompat.requestPermissions(MyInfo.this,
+                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                        1);
+
+            }
+        }
+
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
+        SharedPreferences sharedPreferences = MyInfo.this.getSharedPreferences("email", Context.MODE_PRIVATE);
+        stUid = sharedPreferences.getString("uid", "");
+        stEmail = sharedPreferences.getString("email", "");
+
+        if (ContextCompat.checkSelfPermission(MyInfo.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MyInfo.this,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(MyInfo.this,
+                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                        1);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
+
+        ivUser = (ImageButton) findViewById(R.id.user_profile_photo);
+        ivUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, 1);
+
+            }
+        });
+    }
+
+    public void uploadImage(){
+
+        StorageReference mountainsRef = mStorageRef.child("users").child(stUid+".jpg");
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = mountainsRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @SuppressWarnings("VisibleForTests")
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                String photoUri =  String.valueOf(downloadUrl);
+                Log.d("url", photoUri);
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("users");
+
+                Hashtable<String, String> profile = new Hashtable<String, String>();
+                profile.put("email", stEmail);
+                profile.put("photo",  photoUri);
+
+                myRef.child(stUid).setValue(profile);
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String s = dataSnapshot.getValue().toString();
+                        Log.d("Profile", s);
+                        if (dataSnapshot != null) {
+                            Toast.makeText(MyInfo.this, "사진 업로드가 되었습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+            }
+        });
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -183,16 +298,15 @@ public class MyInfo extends AppCompatActivity {
         Uri image = data.getData();
         try {
             bitmap = MediaStore.Images.Media.getBitmap(MyInfo.this.getContentResolver(), image);
-            imBtn.setImageBitmap(bitmap);
-            imBtn.setBackgroundColor(Color.rgb(0,0,0));
-            imBtn.setPadding(0,0,0,0);
-            //uploadImage();
+            ivUser.setImageBitmap(bitmap);
+            ivUser.setBackgroundColor(Color.rgb(0,0,0));
+            ivUser.setPadding(0,0,0,0);
+            uploadImage();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -203,12 +317,10 @@ public class MyInfo extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 } else {
-
                 }
                 return;
             }
         }
     }
-
 
 }

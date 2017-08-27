@@ -81,6 +81,15 @@ public class LoginMain extends AppCompatActivity {
                     editor.putString("email", user.getEmail());
                     editor.apply();
 
+                    if (user != null) {
+                        Hashtable<String, String> profile = new Hashtable<String, String>();
+                        profile.put("email", user.getEmail());
+                        profile.put("photo", "");
+                        profile.put("key", user.getUid());
+                        myRef.child(user.getUid()).setValue(profile);
+                    }
+
+
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -187,9 +196,7 @@ public class LoginMain extends AppCompatActivity {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
                         pbLogin.setVisibility(View.GONE);
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
+
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail", task.getException());
                             Toast.makeText(LoginMain.this, "Authentication failed.",

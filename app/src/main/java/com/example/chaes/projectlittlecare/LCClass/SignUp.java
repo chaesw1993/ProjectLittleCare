@@ -48,9 +48,9 @@ public class SignUp extends AppCompatActivity {
     String stEmail;
     String stPassword;
     DatabaseReference myRef;
-    FirebaseUser user;
+
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,25 +60,7 @@ public class SignUp extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("users");
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
 
-                    SharedPreferences sharedPreferences = getSharedPreferences("email", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("uid", user.getUid());
-                    editor.putString("email", user.getEmail());
-                    editor.apply();
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-            }
-        };
 
         button = (Button) findViewById(R.id.button);
         email = (EditText) findViewById(R.id.sign_id);
@@ -99,6 +81,7 @@ public class SignUp extends AppCompatActivity {
                     Toast.makeText(SignUp.this, "입력해 주세요", Toast.LENGTH_SHORT).show();
                 } else{
                     regiserUser(stEmail, stPassword);
+
                 }
 
                     request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
@@ -149,29 +132,10 @@ public class SignUp extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-
-
-
                         if (!task.isSuccessful()) {
                             Toast.makeText(SignUp.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(SignUp.this, "Authentication success.",
-                                    Toast.LENGTH_SHORT).show();
-
-                            if (user != null) {
-                                Hashtable<String, String> profile = new Hashtable<String, String>();
-                                profile.put("email", user.getEmail());
-                                profile.put("photo", "");
-                                profile.put("key", user.getUid());
-                                myRef.child(user.getUid()).setValue(profile);
-                            }
                         }
-
-                        // ...
                     }
                 });
 

@@ -46,8 +46,6 @@ public class AAA_matchingTest extends AppCompatActivity {
     ListView mlistView;
     String mJsonString;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,12 +66,8 @@ public class AAA_matchingTest extends AppCompatActivity {
             }
         });
 
+
     }
-
-
-
-
-
 
 
     private class GetData extends AsyncTask<String, Void, String>{
