@@ -26,20 +26,18 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
-
     String TAG = this.getClass().getSimpleName();
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    String[] myDataset = {};
+
 
     EditText etText;
     Button btnSend;
     String email;
     List<Chat> mChat;
     FirebaseDatabase database;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,26 +46,25 @@ public class ChatActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            // Name, email address, and profile photo Url
             email = user.getEmail();
         }
 
         Intent in = getIntent();
         final String stChatId = in.getStringExtra("friendUid");
 
-
         etText = (EditText) findViewById(R.id.etText);
         btnSend = (Button) findViewById(R.id.btnSend);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+
                 String stText = etText.getText().toString();
                 if (stText.equals("") || stText.isEmpty()){
-                    //Toast.makeText(ChatActivity.this, , Toast.LENGTH_SHORT).show();
-                    //빈채팅입력
+                    Toast.makeText(ChatActivity.this, "내용을 입력해 주세요.", Toast.LENGTH_SHORT).show();
                 } else {
-                    //Toast.makeText(ChatActivity.this, email+","+stText, Toast.LENGTH_SHORT).show();
-                    //뭔가 쳤을때
+                    Toast.makeText(ChatActivity.this, email+","+stText, Toast.LENGTH_SHORT).show();
+
+
                     Calendar c = Calendar.getInstance();
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String formattedDate = df.format(c.getTime());
@@ -85,9 +82,7 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 
-
-
-        mRecyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -96,11 +91,10 @@ public class ChatActivity extends AppCompatActivity {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
+        mChat = new ArrayList<>();
         // specify an adapter (see also next example)
         mAdapter = new ChatAdapter(mChat, email, ChatActivity.this);
         mRecyclerView.setAdapter(mAdapter);
-
 
         DatabaseReference myRef = database.getReference("users").child(stChatId).child("chat");
         myRef.addChildEventListener(new ChildEventListener() {

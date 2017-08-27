@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.chaes.projectlittlecare.LCClass.ChatActivity;
 import com.example.chaes.projectlittlecare.LCClass.FindInfo;
 import com.example.chaes.projectlittlecare.LCClass.SignUp;
 import com.example.chaes.projectlittlecare.LCClass.UnPFlag;
@@ -35,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 
@@ -45,37 +47,38 @@ public class LoginMain extends AppCompatActivity {
     private StringRequest request;
     private EditText email, password;
     private Button btn;
+
     String TAG = "MainActivity";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     DatabaseReference myRef;
     FirebaseUser fbuser;
     ProgressBar pbLogin;
+    String stEmail; String stPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_main);
-
+        requestQueue = Volley.newRequestQueue(this);
         btn = (Button) findViewById(R.id.btn_login);
         TextView textView = (TextView) findViewById(R.id.link_signup);
         TextView textView2 = (TextView) findViewById(R.id.link_find);
         email = (EditText) findViewById(R.id.input_email);
         password = (EditText) findViewById(R.id.input_password);
+
+
         pbLogin = (ProgressBar) findViewById(R.id.pbLogin);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("users");
+        myRef = database.getReference();
         mAuth = FirebaseAuth.getInstance();
-
-        requestQueue = Volley.newRequestQueue(this);
         mAuthListener = new FirebaseAuth.AuthStateListener() {
-
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 fbuser = firebaseAuth.getCurrentUser();
                 if (fbuser != null) {
                     // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + fbuser.getUid());
+                    Log.d(TAG, "로그인상태:" + fbuser.getUid());
 
                     SharedPreferences sharedPreferences = getSharedPreferences("email", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -84,12 +87,12 @@ public class LoginMain extends AppCompatActivity {
                     editor.apply();
                 } else {
                     // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    Log.d(TAG, "로그아웃상태");
                 }
             }
         };
 
-        btn.setOnClickListener(new View.OnClickListener() { // 제공자
+       /*btn.setOnClickListener(new View.OnClickListener() { // 제공자
             @Override
             public void onClick(View v) {
                 user.setUnPFlag(2);
@@ -100,10 +103,17 @@ public class LoginMain extends AppCompatActivity {
                 //finish();
             }
         });
-
-        btn.setOnClickListener(new View.OnClickListener() { // 유저
+*/
+        btn.setOnClickListener(new View.OnClickListener() { // 유저로그인
             @Override
             public void onClick(View v) {
+                stEmail = email.getText().toString();
+                stPassword = password.getText().toString();
+                if (stEmail.isEmpty() || stEmail.equals("") || stPassword.isEmpty() || stPassword.equals("")) {
+                    Toast.makeText(LoginMain.this, "잘못입력하셨습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    userLogin(stEmail, stPassword);
+                }
 
                 request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                     @Override
@@ -114,6 +124,7 @@ public class LoginMain extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Success " + jsonObject.getString("success"), Toast.LENGTH_SHORT).show();
                                 user.setUnPFlag(1);
                                 Intent intent = new Intent(LoginMain.this, MenuMain.class);
+
                                 intent.putExtra("UnPFlag", user);
                                 intent.putExtra("email", email.getText().toString());
                                 startActivity(intent);
@@ -140,15 +151,7 @@ public class LoginMain extends AppCompatActivity {
                         return hashMap;
                     }
                 };
-
                 requestQueue.add(request);
-
-                if (email.getText().toString().isEmpty() || email.getText().toString().equals("") || password.getText().toString().isEmpty() || password.getText().toString().equals("")) {
-                    Toast.makeText(LoginMain.this, "잘못입력하셨습니다.", Toast.LENGTH_SHORT).show();
-                } else {
-                    userLogin(email.getText().toString(), password.getText().toString());
-                }
-
             }
         });
 
@@ -193,18 +196,21 @@ public class LoginMain extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                        Log.d(TAG, "로그인성공" + task.isSuccessful());
 
                         pbLogin.setVisibility(View.GONE);
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
+
+                        Hashtable<String, String> profile = new Hashtable<String, String>();
+
+                        profile.put("email", fbuser.getEmail());
+                        profile.put("photo", "");
+                        profile.put("key", fbuser.getUid());
+                        myRef.child(fbuser.getUid()).push().setValue(profile);
+
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithEmail", task.getException());
-                            Toast.makeText(LoginMain.this, "Authentication failed.",
+                            Toast.makeText(LoginMain.this, "로그인실패",
                                     Toast.LENGTH_SHORT).show();
-                        } else {
-
                         }
                     }
                 });
